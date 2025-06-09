@@ -1,0 +1,9 @@
+:root {
+  --color-primary: #164b54;
+  --color-blue-light: #f0fdff;
+  --color-green-light: #73e4c0;
+  --color-green: #09D082;
+
+  --max-width-searchBar: 600px;
+  --front-size: 1.2rem;
+}

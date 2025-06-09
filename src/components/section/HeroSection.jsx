@@ -1,0 +1,59 @@
+import { Box, Stack, Typography } from "@mui/material";
+
+import Header from "../Header";
+import SearchBox from "../SearchBox";
+
+const NumbberBusiness = 231;
+const NumbberStaff = 2312;
+
+const HeroSection = () => {
+  return (
+    <Stack
+      className="w-full px-4 md:px-20 py-8 bg-(--color-blue-light)"
+      spacing={7}
+      sx={{
+        minHeight: {
+          md: "640px",
+          lg: "720px",
+        },
+      }}
+    >
+      <Header />
+      <Stack spacing={5}>
+        <Typography
+          variant="h1"
+          sx={{
+            fontSize: {
+              md: "4rem",
+              xl: "5rem",
+            },
+            letterSpacing: "2px",
+            fontFamily: "DM Serif Text",
+          }}
+          // md={{
+          //   fontSize: "4rem",
+          //   letterSpacing: "2px",
+          //   fontFamily: "DM Serif Text",
+          // }}
+          style={{ width: "40%", maxWidth: "600px" }}
+        >
+          Find the best beauty services in your city
+        </Typography>
+        <Typography>
+          ~ More than{" "}
+          <Box component={"span"} sx={{ color: "var(--color-green-light)" }}>
+            {NumbberBusiness.toLocaleString("vi-VN")}
+          </Box>{" "}
+          business and{" "}
+          <Box component={"span"} sx={{ color: "var(--color-green-light)" }}>
+            {NumbberStaff.toLocaleString("en-US")}
+          </Box>{" "}
+          individual
+        </Typography>
+        <SearchBox />
+      </Stack>
+    </Stack>
+  );
+};
+
+export default HeroSection;
