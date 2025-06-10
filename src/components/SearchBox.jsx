@@ -21,23 +21,25 @@ const SearchBox = () => {
   const reduxCityCode = useSelector((state) => state.location.cityCode);
   const transformData = (data) => {
     if (!data) return [];
-    const locationList = data.locations.map((loc) => ({
+
+    const locationList = (data.locations || []).map((loc) => ({
       type: "location",
       name: loc.name,
     }));
 
-    const staffList = data.staffs.map((staff) => ({
+    const staffList = (data.staffs || []).map((staff) => ({
       type: "staff",
       name: `${staff.firstName} ${staff.lastName}`,
     }));
 
-    const serviceList = data.services.map((service) => ({
+    const serviceList = (data.services || []).map((service) => ({
       type: "service",
       name: service.name,
     }));
 
     return [...locationList, ...staffList, ...serviceList];
   };
+
   useEffect(() => {
     const getSearchData = async (cityCode, value) => {
       const res = await getSearch({ cityCode: cityCode, p: value });
