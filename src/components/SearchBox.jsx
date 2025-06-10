@@ -20,6 +20,7 @@ const SearchBox = () => {
   const debounce = useDebounced(searchValue);
   const reduxCityCode = useSelector((state) => state.location.cityCode);
   const transformData = (data) => {
+    if (!data) return [];
     const locationList = data.locations.map((loc) => ({
       type: "location",
       name: loc.name,
