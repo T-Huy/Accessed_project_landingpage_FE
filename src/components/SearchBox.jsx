@@ -42,8 +42,9 @@ const SearchBox = () => {
       const res = await getSearch({ cityCode: cityCode, p: value });
       console.log(res);
       console.log(transformData(res));
-
-      setOptions(transformData(res));
+      if (Object.keys(res).length > 0) {
+        setOptions(transformData(res));
+      }
     };
     getSearchData(reduxCityCode, debounce);
   }, [debounce]);
