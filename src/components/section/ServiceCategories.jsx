@@ -6,6 +6,9 @@ import {
   ArrowForwardIosOutlined,
 } from "@mui/icons-material";
 import { Card, Typography, Box, IconButton } from "@mui/material";
+import { serviceCategory } from "../../services/serviceCategory";
+import React from "react";
+import { useSelector } from "react-redux";
 
 // Custom Arrow Components
 const CustomPrevArrow = ({ onClick }) => (
@@ -59,6 +62,28 @@ const colorPool = [
 ];
 
 const ServiceCategories = () => {
+  const [categories, setCategories] = React.useState([]);
+  const reduxCityCode = useSelector((state) => state.location.cityCode);
+  React.useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const res = await serviceCategory();
+        console.log(res);
+        setCategories(
+          res.data.serviceCategories.map((item) => ({
+            id: item._id,
+            name: item.name,
+            image: item.image,
+          }))
+        );
+      } catch (error) {
+        console.log(error);
+        return;
+      }
+    };
+    if (reduxCityCode) getCategories();
+  }, [reduxCityCode]);
+
   const settings = {
     dots: false,
     infinite: false,
@@ -112,20 +137,6 @@ const ServiceCategories = () => {
     return colorPool[index % colorPool.length];
   }
 
-  // Sample data
-  const categories = [
-    { id: 1, name: "Plumbing" },
-    { id: 2, name: "Electrical" },
-    { id: 3, name: "Cleaning" },
-    { id: 4, name: "Gardening" },
-    { id: 5, name: "Painting" },
-    { id: 6, name: "Carpentry" },
-    { id: 7, name: "Moving" },
-    { id: 8, name: "Repair" },
-    { id: 9, name: "Installation" },
-    { id: 10, name: "Maintenance" },
-  ];
-
   return (
     <Box
       sx={{
@@ -147,9 +158,6 @@ const ServiceCategories = () => {
           "& .slick-list": {
             overflow: "hidden",
           },
-          //   "& .slick-slide": {
-          //     width: "40% !important",
-          //   },
         }}
       >
         <Slider {...settings}>
@@ -171,6 +179,7 @@ const ServiceCategories = () => {
                     backgroundColor: bgColor,
                     borderRadius: "16px",
                     padding: "24px",
+                    position: "relative",
                   }}
                   onClick={() => {
                     // console.log("hhahahaha"); // hanhle when choose service
@@ -186,6 +195,18 @@ const ServiceCategories = () => {
                   >
                     {category.name}
                   </Typography>
+                  <div
+                    style={{
+                      position: "absolute",
+                      bottom: "0",
+                      right: "0",
+                      width: "30%",
+                      height: "100%",
+                      objectFit: "revert",
+                    }}
+                  >
+                    <img src={category.image} />
+                  </div>
                 </Card>
               </div>
             );

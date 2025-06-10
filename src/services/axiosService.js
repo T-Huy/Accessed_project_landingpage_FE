@@ -1,5 +1,5 @@
 import axios from "axios";
-import { UNAUTHORIZED_ERROR } from "../constants/error.jsx";
+import { UNAUTHORIZED_ERROR } from "../constants/error";
 
 import store from "../redux/store";
 import { logout, setAccessToken } from "../redux/userSlice";
@@ -26,7 +26,7 @@ const processQueue = (error, token = null) => {
 // Add Authorization header from Redux token
 axiosClient.interceptors.request.use((config) => {
   const state = store.getState();
-  const token = state.user.access_token;
+  const token = state.user.accessToken;
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -59,8 +59,8 @@ axiosClient.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const { data } = await axiosClient.post("/auth/refresh"); // refresh token qua cookie
-        const newToken = data.access_token;
+        const { data } = await axiosClient.post("/api/auth/refresh-token"); // refresh token qua cookie
+        const newToken = data.newAccessToken;
 
         store.dispatch(setAccessToken(newToken));
 

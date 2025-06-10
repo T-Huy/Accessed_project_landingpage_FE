@@ -138,6 +138,7 @@ const PopularRender = ({ items, type, title }) => {
               <div key={category.id}>
                 <PopuparItem
                   {...category}
+                  type={type}
                   imageDefault={imageDefault}
                 ></PopuparItem>
               </div>

@@ -9,7 +9,11 @@ import PromoJoinNow from "../components/section/PromoJoinNow";
 import Recommended from "../components/section/Recommended";
 
 const HomePage = () => {
-  // Sample data
+  // console.log(city);
+
+  React.useEffect(() => {
+  }, []);
+
   return (
     <Box className={"section"}>
       <HeroSection />

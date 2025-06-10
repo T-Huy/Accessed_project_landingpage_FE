@@ -4,8 +4,14 @@ import {
   ArrowForwardIosOutlined,
 } from "@mui/icons-material";
 import Slider from "react-slick";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { getPopularService } from "../../services/service";
 
 const PopularServiceSection = () => {
+  const [service, setService] = useState([]);
+  const reduxCityCode = useSelector((state) => state.location.cityCode);
+
   const CustomPrevArrow = ({ onClick }) => (
     <IconButton
       onClick={onClick}
@@ -45,6 +51,28 @@ const PopularServiceSection = () => {
       <ArrowForwardIosOutlined />
     </IconButton>
   );
+
+  useEffect(() => {
+    const getServices = async (cityCode) => {
+      try {
+        const res = await getPopularService({ cityCode: cityCode });
+        console.log(res);
+        setService(
+          res.data.map((item, index) => ({
+            id: index,
+            name: item.name,
+            image: item.image,
+          }))
+        );
+      } catch (error) {
+        console.log(error);
+        return;
+      }
+    };
+    if (reduxCityCode) {
+      getServices(reduxCityCode);
+    }
+  }, [reduxCityCode]);
 
   const settings = {
     dots: false,
@@ -94,18 +122,6 @@ const PopularServiceSection = () => {
     ],
   };
 
-  const categories = [
-    { id: 1, name: "Plumbing" },
-    { id: 2, name: "Electrical" },
-    { id: 3, name: "Cleaning" },
-    { id: 4, name: "Gardening" },
-    { id: 5, name: "Painting" },
-    { id: 6, name: "Carpentry" },
-    { id: 7, name: "Moving" },
-    { id: 8, name: "Repair" },
-    { id: 9, name: "Installation" },
-    { id: 10, name: "Maintenance" },
-  ];
   return (
     <Stack>
       <Typography variant="h3" fontWeight={"bold"}>
@@ -137,7 +153,7 @@ const PopularServiceSection = () => {
           }}
         >
           <Slider {...settings}>
-            {categories.map((category, index) => {
+            {service.map((category, index) => {
               return (
                 <div key={category.id}>
                   <Card
@@ -154,9 +170,10 @@ const PopularServiceSection = () => {
                       backgroundColor: "var(--color-blue-light)",
                       borderRadius: "16px",
                       padding: "24px",
+                      position: "relative",
                     }}
                     onClick={() => {
-                      // console.log("hhahahaha"); // hanhle when choose service
+                      // hanhle when choose service
                     }}
                   >
                     <Typography
@@ -169,6 +186,18 @@ const PopularServiceSection = () => {
                     >
                       {category.name}
                     </Typography>
+                    <div
+                      style={{
+                        position: "absolute",
+                        right: "0",
+                        bottom: "0",
+                        width: "100%",
+                        height:"60%",
+                        objectFit:"contain"
+                      }}
+                    >
+                      <img src={category.image}></img>
+                    </div>
                   </Card>
                 </div>
               );

@@ -6,19 +6,19 @@ const INFO_STEP = [
     step: 1,
     title: "Find",
     description: "Choose a staff or business nearby for reviews and rating",
-    image: "",
+    image: "./32.png",
   },
   {
     step: 2,
     title: "Booking",
     description: "At a convenient time and in just a few clicks",
-    image: "",
+    image: "./31.png",
   },
   {
     step: 3,
     title: "Enjoy",
     description: "Get the best services from professionals",
-    image: "",
+    image: "./33.png",
   },
 ];
 

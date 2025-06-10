@@ -2,6 +2,7 @@ import { ensureString } from "../utils/string.utils";
 import axiosClient from "./axiosService";
 
 const buildQueryParams = (url, params) => {
+  console.log(params);
   if (!params || typeof params !== "object") return url;
 
   const searchParams = new URLSearchParams();
@@ -18,6 +19,7 @@ const buildQueryParams = (url, params) => {
 export const get = async (url, params) => {
   try {
     const fullUrl = buildQueryParams(url, params);
+    console.log(fullUrl);
     const { data } = await axiosClient.get(fullUrl);
     return data;
   } catch (error) {

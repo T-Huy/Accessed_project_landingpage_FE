@@ -1,18 +1,15 @@
 import { useState } from "react";
 import { Box, Button, Stack } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../redux/userSlice";
+import { useSelector } from "react-redux";
 import Login from "./Login";
+import UserMenu from "./UserMenu";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
-  const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.userInfo);
-  const accessToken = useSelector((state) => state.user.access_token);
-
-  const handleLogout = () => {
-    dispatch(logout());
-  };
+  const isLoggedIn = Boolean(userInfo);
+  const accessToken = useSelector((state) => state.user.accessToken);
+  console.log(accessToken, userInfo);
 
   return (
     <>
@@ -34,20 +31,24 @@ const Header = () => {
           >
             For business
           </Button>
-          <Button
-            variant="contained"
-            style={{
-              backgroundColor: "var(--color-primary)",
-              borderRadius: "12px",
-              textTransform: "none",
-              padding: "0 20px",
-            }}
-            onClick={() => {
-              setOpen(true);
-            }}
-          >
-            Log in
-          </Button>
+          {isLoggedIn ? (
+            <UserMenu userInfo={userInfo} />
+          ) : (
+            <Button
+              variant="contained"
+              style={{
+                backgroundColor: "var(--color-primary)",
+                borderRadius: "12px",
+                textTransform: "none",
+                padding: "0 20px",
+              }}
+              onClick={() => {
+                setOpen(true);
+              }}
+            >
+              Log in
+            </Button>
+          )}
         </Stack>
       </Box>
       <Login

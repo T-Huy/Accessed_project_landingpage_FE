@@ -1,25 +1,20 @@
 import { FormControl, MenuItem, Select } from "@mui/material";
-import { useState } from "react";
+import { useCitySelect } from "../hook/useCitySelect";
 
-const SelectCustom = ({ option = [] }) => {
-  const [location, setLocation] = useState(" ");
-  const handleChangeLocation = (event) => {
-    console.log(event.target.value);
-
-    setLocation(event.target.value);
-  };
+const SelectCustom = () => {
+  const { options, value, handleChange } = useCitySelect("");
   return (
     <FormControl className="w-full">
       <Select
         className="input-none-outlined"
         inputProps={{ "aria-label": "Without label" }}
-        value={location}
-        onChange={handleChangeLocation}
+        value={value}
+        onChange={handleChange}
       >
         <MenuItem value=" ">
           <div>Location</div>
         </MenuItem>
-        {option.map((item) => (
+        {options.map((item) => (
           <MenuItem value={item.value}>{item.label}</MenuItem>
         ))}
       </Select>

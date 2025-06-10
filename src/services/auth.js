@@ -1,30 +1,36 @@
-import { loginSuccess } from "../redux/userSlice";
 import { post } from "./baseService";
 
-const endPointUser = "/auth";
+const endPointUser = "/api/auth";
 
 const cpathUser = (action) => `${endPointUser}/${action}`;
 
-export const login = async (value) => {
+export const loginHandle = async (value) => {
   try {
     const res = await post(cpathUser("login"), value);
-    if (res.status === 200) {
-      dispatch(
-        loginSuccess({
-          access_token: res.access_token,
-          userInfo: res.user[0],
-        })
-      );
-      console.log("đăng nhập thành công", res.message);
-
-      return true;
-    } else {
-      console.log(res.message || "Lỗi đăng nhập");
-
-      return false;
-    }
+    console.log(res);
+    return res;
   } catch (error) {
     console.log(error);
     return null;
+  }
+};
+
+export const refresh = async () => {
+  try {
+    const res = await post(cpathUser("refresh-token"));
+    return res;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const logoutHandle = async () => {
+  try {
+    const res = await post(cpathUser("logout"));
+    return res;
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };

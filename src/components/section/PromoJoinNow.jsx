@@ -11,7 +11,7 @@ const PromoJoinNow = () => {
         style={{
           width: "36%",
           height: "640px",
-          backgroundColor: "red",
+          backgroundImage: `url("https://i.pinimg.com/736x/42/fb/81/42fb8164c73c068708f0c708bfcd84c2.jpg")`,
           borderRadius: "120px 16px 16px",
         }}
       ></div>

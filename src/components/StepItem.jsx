@@ -8,7 +8,6 @@ const StepItem = ({ item, style }) => {
         sx={{
           width: "100%",
           height: "240px",
-          backgroundColor: "red",
           padding: "24px",
           borderRadius: "20px",
           position: "relative",
@@ -35,7 +34,12 @@ const StepItem = ({ item, style }) => {
         <div
           className="w-full h-full bg-white"
           style={{ borderRadius: "12px" }}
-        ></div>
+        >
+          <img
+            style={{ objectFit: "contain", height: "100%", width: "100%" }}
+            src={image}
+          />
+        </div>
       </Box>
       <Stack sx={{ paddingTop: "40px" }}>
         <Typography variant="h6" fontWeight={"bold"}>

@@ -2,31 +2,32 @@ import { useState } from "react";
 import {
   Box,
   Button,
-  Checkbox,
   Dialog,
   DialogContent,
   DialogTitle,
-  FormControlLabel,
   Stack,
   TextField,
-  Typography,
 } from "@mui/material";
 import useLogin from "../hook/useLogin";
+import { useSelector } from "react-redux";
 
 const Login = ({ onClose, open }) => {
   const [form, setForm] = useState({
-    email: "",
+    username: "",
     password: "",
   });
+
   const { login, loading, error } = useLogin();
+  const accessToken = useSelector((state) => state.user.accessToken);
+
   const handleClose = () => {
     onClose();
     setForm({
-      email: "",
+      username: "",
       password: "",
-      remember: false,
     });
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({
@@ -34,13 +35,18 @@ const Login = ({ onClose, open }) => {
       [name]: value,
     }));
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login Data:", form);
-    const res = await login(form);
-    if (res) handleClose();
-    // TODO: call login API
+    const res = await login(form); // login API trong custom hook
+    console.log(res);
+    if (res) {
+      handleClose();
+    } else {
+      console.error("Login failed:", res);
+    }
   };
+
   return (
     <Dialog
       open={open}
@@ -57,13 +63,13 @@ const Login = ({ onClose, open }) => {
         <Box component="form" onSubmit={handleSubmit} noValidate>
           <Stack spacing={2}>
             <TextField
-              label="Email"
-              name="email"
+              label="Username"
+              name="username"
               fullWidth
               variant="standard"
-              value={form.email}
+              value={form.username}
               onChange={handleChange}
-              type="email"
+              type="text"
               required
             />
             <TextField
@@ -86,11 +92,7 @@ const Login = ({ onClose, open }) => {
                 backgroundColor: "var(--color-primary)",
                 borderRadius: "8px",
               }}
-              disabled={
-                loading || form.email === "" || form.password === ""
-                  ? true
-                  : false
-              }
+              disabled={loading || form.username === "" || form.password === ""}
             >
               Đăng nhập
             </Button>
